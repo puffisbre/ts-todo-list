@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "description": "todo list made with TypeScript and regular HTML/CSS.",
   "devDependencies": {
     "ts-node": "^10.9.2"
   }

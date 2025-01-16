@@ -4,7 +4,16 @@ const postTitle = document.querySelector('.post-title') as HTMLElement;
 const postContent = document.querySelector('.post-content') as HTMLElement;
 const postComplete = document.querySelector('.post-complete') as HTMLElement;
 
-let id: number = JSON.parse(localStorage.getItem("postList"))[JSON.parse(localStorage.getItem("postList")).length - 1].id;
+let id: number = 0;
+
+if (localStorage.getItem("postList") != null) {
+   id = JSON.parse(localStorage.getItem("postList"))[JSON.parse(localStorage.getItem("postList")).length - 1].id;
+
+}else{
+   id = 0;
+}
+
+
 postParent.innerHTML = '';
 
 type Post = {
@@ -14,12 +23,22 @@ type Post = {
     completed: boolean
 }
 
-let allPosts: Post[] = JSON.parse(localStorage.getItem("postList"));
+let allPosts: Post[] = [];
+
+if (localStorage.getItem("postList") != null) {
+     allPosts = JSON.parse(localStorage.getItem("postList"));
+
+}else{
+     allPosts = [];
+}
+
 
 const addPost = (a: Post[]) => {
 const inputTitle = (document.querySelector('#title-to-add') as HTMLInputElement).value;
 const inputContent = (document.querySelector('#task-to-add') as HTMLInputElement).value;
+if (localStorage.getItem("postList") != null) {
     id++;
+}
     const singlePost: Post = {
         id: 0,
         title: "",
@@ -35,13 +54,15 @@ const inputContent = (document.querySelector('#task-to-add') as HTMLInputElement
    return a;
 }
 
+const localStorageGet: [] = JSON.parse(localStorage.getItem("postList"));
+
 const renderUI = (a: Post[]) => {
  a.map((item) => {
-   const li = `<li id=${id}>
+   const li = `<li id=${item.id}>
     <h1 class="post-title">${item.title}</h1>
     <p class="post-content">${item.content}</p>
     <h4 class="post-complete">${item.completed.toString()}</h4>
-    <button class="post-delete" onclick=${deletePost(JSON.parse(localStorage.getItem("postList")))}>Delete Post</button>
+    <button class="post-delete">Delete Post</button>
     </li>`;
     postParent.innerHTML += li;
  })
@@ -49,11 +70,24 @@ const renderUI = (a: Post[]) => {
 
 //Ta in array från localstorage och sen stoppa i den igen.
 
-const deletePost = (a: Post[]) => {
- a.splice(a.findIndex(i => {
-    return i.id === 1;
- }), 1)
-}
+document.addEventListener('click', (evt) => {
+    let freshArray: Post[] = [...localStorageGet];
+    const { target } = evt;
+    if (target instanceof HTMLElement) {
+      // freshArray = freshArray.filter(a => a.id != parseInt(target.parentElement.id));
+      const index = freshArray.findIndex(item => item.id === parseInt(target.parentElement.id));
+
+ //if (index !== -1) {
+         //   freshArray.splice(index, 1);
+       // }
+       console.log(index);
+
+console.log(freshArray);
+    }
+});
+
+
+
 
 addPostBtn.addEventListener('click', () => {
     postParent.innerHTML = '';
@@ -61,4 +95,12 @@ localStorage.setItem('postList', JSON.stringify(addPost(allPosts)));
 renderUI(JSON.parse(localStorage.getItem("postList")));
 })
 
-renderUI(JSON.parse(localStorage.getItem("postList")));
+if (localStorage.getItem("postList") != null) {
+    renderUI(JSON.parse(localStorage.getItem("postList")));
+}
+
+
+
+  
+
+export {};

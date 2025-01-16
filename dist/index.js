@@ -3,13 +3,27 @@ const postParent = document.querySelector('.post-parent');
 const postTitle = document.querySelector('.post-title');
 const postContent = document.querySelector('.post-content');
 const postComplete = document.querySelector('.post-complete');
-let id = JSON.parse(localStorage.getItem("postList"))[JSON.parse(localStorage.getItem("postList")).length - 1].id;
+let id = 0;
+if (localStorage.getItem("postList") != null) {
+    id = JSON.parse(localStorage.getItem("postList"))[JSON.parse(localStorage.getItem("postList")).length - 1].id;
+}
+else {
+    id = 0;
+}
 postParent.innerHTML = '';
-let allPosts = JSON.parse(localStorage.getItem("postList"));
+let allPosts = [];
+if (localStorage.getItem("postList") != null) {
+    allPosts = JSON.parse(localStorage.getItem("postList"));
+}
+else {
+    allPosts = [];
+}
 const addPost = (a) => {
     const inputTitle = document.querySelector('#title-to-add').value;
     const inputContent = document.querySelector('#task-to-add').value;
-    id++;
+    if (localStorage.getItem("postList") != null) {
+        id++;
+    }
     const singlePost = {
         id: 0,
         title: "",
@@ -23,26 +37,38 @@ const addPost = (a) => {
     a.push(singlePost);
     return a;
 };
+const localStorageGet = JSON.parse(localStorage.getItem("postList"));
 const renderUI = (a) => {
     a.map((item) => {
-        const li = `<li id=${id}>
+        const li = `<li id=${item.id}>
     <h1 class="post-title">${item.title}</h1>
     <p class="post-content">${item.content}</p>
     <h4 class="post-complete">${item.completed.toString()}</h4>
-    <button class="post-delete" onclick=${deletePost(JSON.parse(localStorage.getItem("postList")))}>Delete Post</button>
+    <button class="post-delete">Delete Post</button>
     </li>`;
         postParent.innerHTML += li;
     });
 };
-const deletePost = (a) => {
-    a.splice(a.findIndex(i => {
-        return i.id === 1;
-    }), 1);
-};
+//Ta in array från localstorage och sen stoppa i den igen.
+document.addEventListener('click', (evt) => {
+    let freshArray = [...localStorageGet];
+    const { target } = evt;
+    if (target instanceof HTMLElement) {
+        // freshArray = freshArray.filter(a => a.id != parseInt(target.parentElement.id));
+        const index = freshArray.findIndex(item => item.id === parseInt(target.parentElement.id));
+        //if (index !== -1) {
+        //   freshArray.splice(index, 1);
+        // }
+        console.log(index);
+        console.log(freshArray);
+    }
+});
 addPostBtn.addEventListener('click', () => {
     postParent.innerHTML = '';
     localStorage.setItem('postList', JSON.stringify(addPost(allPosts)));
     renderUI(JSON.parse(localStorage.getItem("postList")));
 });
-renderUI(JSON.parse(localStorage.getItem("postList")));
+if (localStorage.getItem("postList") != null) {
+    renderUI(JSON.parse(localStorage.getItem("postList")));
+}
 //# sourceMappingURL=index.js.map
