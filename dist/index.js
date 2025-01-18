@@ -40,7 +40,9 @@ const del = (e) => {
     postParent.innerHTML = '';
     localStorage.setItem('postList', JSON.stringify(freshArray));
     renderUI(JSON.parse(localStorage.getItem("postList")));
-    checkAllTask();
+    setTimeout(() => {
+        checkAllTask();
+    }, 100);
 };
 /* localStorageGet.map((item) => {
     if(item.completed === true){
@@ -73,6 +75,7 @@ setTimeout(() => {
 const completeTask = (e) => {
     let freshArray = [...JSON.parse(localStorage.getItem("postList"))];
     let targetedItem = freshArray.filter(item => item.id === parseInt(e.parentNode.id));
+    let targetedLocalItem = allPosts.filter(item => item.id === parseInt(e.parentNode.id));
     targetedItem.map((item) => {
         item.completed = !item.completed;
         if (item.completed === true) {
@@ -81,6 +84,9 @@ const completeTask = (e) => {
         else if (item.completed === false) {
             e.parentNode.classList.remove("completeTask");
         }
+    });
+    targetedLocalItem.map((item) => {
+        item.completed = !item.completed;
     });
     localStorage.setItem('postList', JSON.stringify(freshArray));
 };
@@ -100,7 +106,9 @@ addPostBtn.addEventListener('click', () => {
     postParent.innerHTML = '';
     localStorage.setItem('postList', JSON.stringify(addPost(allPosts)));
     renderUI(JSON.parse(localStorage.getItem("postList")));
-    checkAllTask();
+    setTimeout(() => {
+        checkAllTask();
+    }, 100);
 });
 if (localStorage.getItem("postList") != null) {
     renderUI(JSON.parse(localStorage.getItem("postList")));
