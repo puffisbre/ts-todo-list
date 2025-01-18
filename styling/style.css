@@ -1,0 +1,4 @@
+.completeTask {
+    text-decoration-line: line-through;
+    color: gray;
+}
