@@ -100,7 +100,7 @@ addPostBtn.addEventListener('click', () => {
     postParent.innerHTML = '';
     localStorage.setItem('postList', JSON.stringify(addPost(allPosts)));
     renderUI(JSON.parse(localStorage.getItem("postList")));
-    //allPosts = [];
+    checkAllTask();
 });
 if (localStorage.getItem("postList") != null) {
     renderUI(JSON.parse(localStorage.getItem("postList")));
