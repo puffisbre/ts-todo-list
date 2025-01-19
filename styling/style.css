@@ -1,4 +1,19 @@
+li{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+
+
 .completeTask {
     text-decoration-line: line-through;
     color: gray;
+}
+
+.editWindow {
+    position: absolute;
+width: 80%;
+height: 900px;
 }

@@ -44,17 +44,6 @@ const del = (e) => {
         checkAllTask();
     }, 100);
 };
-/* localStorageGet.map((item) => {
-    if(item.completed === true){
-        for(let i = 0; i < allLiItems.length; i++){
-            allLiItems[i].classList.add("completeTask");
-        }
-    }else if(item.completed === false){
-        for(let i = 0; i < allLiItems.length; i++){
-            allLiItems[i].classList.remove("completeTask");
-        }
-    }
-}) */
 const checkAllTask = () => {
     JSON.parse(localStorage.getItem("postList")).map((item) => {
         for (let i = 0; i < allLiItems.length; i++) {
@@ -90,6 +79,27 @@ const completeTask = (e) => {
     });
     localStorage.setItem('postList', JSON.stringify(freshArray));
 };
+const editTask = (e) => {
+    const copyArray = [...JSON.parse(localStorage.getItem("postList"))];
+    const editInput = document.createElement('input');
+    const saveEditBtn = document.createElement('button');
+    saveEditBtn.innerText = "Save Edit";
+    saveEditBtn.addEventListener(('click'), () => {
+        copyArray.map((item) => {
+            if (item.id === parseInt(e.parentNode.id)) {
+                item.content = editInput.value;
+            }
+        });
+        postParent.innerHTML = '';
+        localStorage.setItem('postList', JSON.stringify(copyArray));
+        renderUI(JSON.parse(localStorage.getItem("postList")));
+        setTimeout(() => {
+            checkAllTask();
+        }, 100);
+    });
+    e.parentNode.appendChild(saveEditBtn);
+    e.parentNode.appendChild(editInput);
+};
 const renderUI = (a) => {
     a.map((item) => {
         const li = `<li class="post-item" id=${item.id}>
@@ -98,6 +108,7 @@ const renderUI = (a) => {
     <h4 class="post-complete">${item.completed.toString()}</h4>
     <button class="post-delete" onclick="del(this)">Delete Post</button>
     <button class="post-complete" onclick="completeTask(this)">Complete Post</button>
+    <button class="post-edit" onclick="editTask(this)">Edit Post</button>
     </li>`;
         postParent.innerHTML += li;
     });
