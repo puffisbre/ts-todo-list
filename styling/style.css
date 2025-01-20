@@ -7,6 +7,9 @@
     box-sizing: border-box;
 }
 
+*:focus {
+    outline: none;
+}
 
 body{
     display: flex;
@@ -36,10 +39,29 @@ body{
 
 .input-wrapper{
     display: flex;
-    flex-direction: column;
-    width: 30%;
-    gap: 10px;
+    position: relative;
+    width: 40%;
     margin-top: 30px;
+    margin-bottom: 30px;
+    gap: 5px;
+}
+
+.wrap-the-inputs{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#title-to-add{
+    border-bottom: solid 1px #555555;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+#task-to-add{
+    border-top: solid 1px #555555;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
 }
 
 .input-wrapper input{
@@ -50,17 +72,18 @@ body{
 }
 
 .input-wrapper button{
-    height: 40px;
+    height: 140px;
     background-color: #318CE7;
     border: none;
     border-radius: 10px;
-    width: 30%;
     align-self: center;
     color: white;
+    width: 40%;
     font-size: 25px;
+    margin-right: 40px;
 }
 
-.input-wrapper button{
+.input-wrapper button:hover{
     cursor: pointer;
 }
 
@@ -72,6 +95,7 @@ body{
     justify-content: center;
     align-items: center;
     transform: rotate(180deg);
+    margin-bottom: 20px;
 }
 
 .pin-icon{
