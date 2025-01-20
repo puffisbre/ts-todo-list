@@ -4,6 +4,9 @@ const postTitle = document.querySelector('.post-title') as HTMLElement;
 const postContent = document.querySelector('.post-content') as HTMLElement;
 const postComplete = document.querySelector('.post-complete') as HTMLElement;
 const allLiItems = document.getElementsByClassName('post-item') as HTMLCollection;
+const titleInput = document.querySelector('#title-to-add') as HTMLInputElement;
+const textInput = document.querySelector('#task-to-add') as HTMLInputElement;
+
 
  
 
@@ -21,6 +24,9 @@ type Post = {
 }
 
 let allPosts: Post[] = [];
+
+titleInput.value = "";
+textInput.value = "";
 
 if (localStorage.getItem("postList") != null) {
      allPosts = JSON.parse(localStorage.getItem("postList"));
@@ -132,6 +138,7 @@ const editTask = (e) => {
             setTimeout(() => {
                 checkAllTask();
             }, 100);
+            open = false;
         })
         e.parentNode.parentNode.appendChild(editTitleInput);
         e.parentNode.parentNode.appendChild(editTaskInput);
@@ -153,9 +160,9 @@ const renderUI = (a: Post[]) => {
     <h3 class="post-title">Title: ${item.title}</h3>
     <p class="post-content">Task: ${item.content}</p>
     <div class="button-wrapper">
-    <button class="post-complete" onclick="completeTask(this)"><img src=".././images/icons/check.png" width="20px"></button>
-    <button class="post-edit" onclick="editTask(this)"><img src=".././images/icons/pencil.png" width="20px"></button>
-    <button class="post-delete" onclick="del(this)"><img src=".././images/icons/bin.png" width="20px"></button>
+    <button class="post-complete" onclick="completeTask(this)"><img class="post-complete-btn" src=".././images/icons/check.png" width="25px"></button>
+    <button class="post-edit" onclick="editTask(this)"><img class="post-edit-btn" src=".././images/icons/pencil.png" width="20px"></button>
+    <button class="post-delete" onclick="del(this)"><img class="post-delete-btn" src=".././images/icons/bin.png" width="20px"></button>
     </div>
     </li>`;
     postParent.innerHTML += li;
@@ -169,6 +176,8 @@ renderUI(JSON.parse(localStorage.getItem("postList")));
 setTimeout(() => {
     checkAllTask();
 }, 100);
+titleInput.value = "";
+textInput.value = "";
 })
 
 if (localStorage.getItem("postList") != null) {

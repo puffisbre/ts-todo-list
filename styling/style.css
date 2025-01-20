@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
 *{
     margin: 0;
     padding: 0;
@@ -10,6 +13,11 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #555555;
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+    overflow: hidden;
 }
 
 
@@ -17,20 +25,43 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 40px;
-    height: 800px;
-    width: 70%;
+    height: 950px;
+    width: 100%;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    border-radius: 10px;
     gap: 10px;
     overflow: scroll;
+    background-color: #2f754b;
 
 }
 
 .input-wrapper{
     display: flex;
+    flex-direction: column;
+    width: 30%;
     gap: 10px;
     margin-top: 30px;
+}
+
+.input-wrapper input{
+    height: 70px;
+    border-radius: 15px;
+    border: none;
+    font-size: 25px;
+}
+
+.input-wrapper button{
+    height: 40px;
+    background-color: #318CE7;
+    border: none;
+    border-radius: 10px;
+    width: 30%;
+    align-self: center;
+    color: white;
+    font-size: 25px;
+}
+
+.input-wrapper button{
+    cursor: pointer;
 }
 
 .post-parent{
@@ -40,6 +71,12 @@ body{
     width: 100%;
     justify-content: center;
     align-items: center;
+    transform: rotate(180deg);
+}
+
+.pin-icon{
+    position: absolute;
+    top: 10px;
 }
 
 li{
@@ -51,9 +88,42 @@ li{
     position: relative;
     gap: 10px;
     box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
-    border-radius: 10px;
-    width: 50%;
+    border-width: 5px 3px 3px 5px;
+  border-radius:90% 7% 99% 3%/2% 98% 5% 97%;
+  transform: rotate(1deg);
+  border-color: black;
+    width: 40%;
     height: 200px;
+    background-color: white;
+    transform: rotate(-180deg);
+}
+
+li h3{
+    font-family: "Caveat", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 500px;
+  font-size: 30px;
+}
+
+li p{
+    font-family: "Caveat", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-weight: 500px;
+  font-size: 25px;
+}
+
+li input{
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+li button {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
 }
 
 .button-wrapper{
@@ -62,6 +132,29 @@ li{
     top: 0px;
     right: 0px;
     gap: 10px;
+    margin-right: 30px;
+}
+
+.post-complete, .post-edit, .post-delete{
+    background-color: white;
+    border: none;
+}
+
+.post-complete:hover, .post-edit:hover, .post-delete:hover{
+  cursor: pointer;
+}
+
+
+.post-delete-btn{
+    filter: brightness(0) saturate(100%) invert(18%) sepia(87%) saturate(7102%) hue-rotate(4deg) brightness(99%) contrast(108%);
+}
+
+.post-edit-btn{
+    filter: brightness(0) saturate(100%) invert(53%) sepia(81%) saturate(807%) hue-rotate(159deg) brightness(104%) contrast(95%);
+}
+
+.post-complete-btn{
+    filter: brightness(0) saturate(100%) invert(66%) sepia(76%) saturate(477%) hue-rotate(60deg) brightness(94%) contrast(87%);
 }
 
 .completeTask {
