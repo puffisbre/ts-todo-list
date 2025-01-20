@@ -55,8 +55,8 @@ const localStorageGet: Post[] = JSON.parse(localStorage.getItem("postList"));
 
 const del = (e) => {
     let freshArray: Post[] = [...JSON.parse(localStorage.getItem("postList"))];
-    freshArray = freshArray.filter(item => item.id !== parseInt(e.parentNode.id));
-    allPosts = allPosts.filter(item => item.id !== parseInt(e.parentNode.id));
+    freshArray = freshArray.filter(item => item.id !== parseInt(e.parentNode.parentNode.id));
+    allPosts = allPosts.filter(item => item.id !== parseInt(e.parentNode.parentNode.id));
     postParent.innerHTML = '';
     localStorage.setItem('postList', JSON.stringify(freshArray));
     renderUI(JSON.parse(localStorage.getItem("postList")));
@@ -85,14 +85,14 @@ setTimeout(() => {
 
 const completeTask = (e) => {
 let freshArray: Post[] = [...JSON.parse(localStorage.getItem("postList"))];
-let targetedItem: Post[] = freshArray.filter(item => item.id === parseInt(e.parentNode.id));
-let targetedLocalItem = allPosts.filter(item => item.id === parseInt(e.parentNode.id));
+let targetedItem: Post[] = freshArray.filter(item => item.id === parseInt(e.parentNode.parentNode.id));
+let targetedLocalItem = allPosts.filter(item => item.id === parseInt(e.parentNode.parentNode.id));
 targetedItem.map((item) => {
    item.completed = !item.completed;
    if(item.completed === true){
-    e.parentNode.classList.add("completeTask");
+    e.parentNode.parentNode.classList.add("completeTask");
    }else if(item.completed === false){
-    e.parentNode.classList.remove("completeTask");
+    e.parentNode.parentNode.classList.remove("completeTask");
    }
 });
 targetedLocalItem.map((item) => {
@@ -100,39 +100,63 @@ targetedLocalItem.map((item) => {
 })
 localStorage.setItem('postList', JSON.stringify(freshArray));
 }
-
+let open: boolean = false;
 const editTask = (e) => {
     const copyArray: Post[] = [...JSON.parse(localStorage.getItem("postList"))];
-    const editInput = document.createElement('input') as HTMLInputElement;
-    const saveEditBtn = document.createElement('button') as HTMLButtonElement;
-    saveEditBtn.innerText = "Save Edit";
+    const editTaskInput = document.createElement('input') as HTMLInputElement;
+    const editTitleInput = document.createElement('input') as HTMLInputElement;
+    const saveEditBtn = document.createElement('button') as HTMLButtonElement
+    
 
-    saveEditBtn.addEventListener(('click'), () => {
+    if(open === false){
+        open = true;
+        saveEditBtn.innerText = "Save Edit";
+
         copyArray.map((item) => {
-            if(item.id === parseInt(e.parentNode.id)){
-          item.content = editInput.value;
-            }
-        });
-        postParent.innerHTML = '';
-        localStorage.setItem('postList', JSON.stringify(copyArray));
+            if(item.id === parseInt(e.parentNode.parentNode.id)){
+                 editTaskInput.value = item.content;
+                 editTitleInput.value = item.title;
+                  }
+        })
+    
+        saveEditBtn.addEventListener(('click'), () => {
+            copyArray.map((item) => {
+                if(item.id === parseInt(e.parentNode.parentNode.id)){
+              item.content = editTaskInput.value;
+              item.title = editTitleInput.value;
+                }
+            });
+            postParent.innerHTML = '';
+            localStorage.setItem('postList', JSON.stringify(copyArray));
+            renderUI(JSON.parse(localStorage.getItem("postList")));
+            setTimeout(() => {
+                checkAllTask();
+            }, 100);
+        })
+        e.parentNode.parentNode.appendChild(editTitleInput);
+        e.parentNode.parentNode.appendChild(editTaskInput);
+        e.parentNode.parentNode.appendChild(saveEditBtn);
+    }else if(open === true){ 
+         open = false;
+         postParent.innerHTML = '';
         renderUI(JSON.parse(localStorage.getItem("postList")));
         setTimeout(() => {
             checkAllTask();
         }, 100);
-    })
-    e.parentNode.appendChild(saveEditBtn);
-    e.parentNode.appendChild(editInput);
+    }
+   
 }
 
 const renderUI = (a: Post[]) => {
  a.map((item) => {
    const li = `<li class="post-item" id=${item.id}>
-    <h1 class="post-title">${item.title}</h1>
-    <p class="post-content">${item.content}</p>
-    <h4 class="post-complete">${item.completed.toString()}</h4>
-    <button class="post-delete" onclick="del(this)">Delete Post</button>
-    <button class="post-complete" onclick="completeTask(this)">Complete Post</button>
-    <button class="post-edit" onclick="editTask(this)">Edit Post</button>
+    <h3 class="post-title">Title: ${item.title}</h3>
+    <p class="post-content">Task: ${item.content}</p>
+    <div class="button-wrapper">
+    <button class="post-complete" onclick="completeTask(this)"><img src=".././images/icons/check.png" width="20px"></button>
+    <button class="post-edit" onclick="editTask(this)"><img src=".././images/icons/pencil.png" width="20px"></button>
+    <button class="post-delete" onclick="del(this)"><img src=".././images/icons/bin.png" width="20px"></button>
+    </div>
     </li>`;
     postParent.innerHTML += li;
  })
